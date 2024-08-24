@@ -6,13 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var fireworks = document.createElement("div");
+            fireworks.className = "fireworks";
+            document.body.appendChild(fireworks);
+            setTimeout(function() {
+                fireworks.remove();
+            }, 3000);
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Register</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}  <!-- Render the form fields -->
+            {{ form.as_p }}
             <button type="submit">Register</button>
         </form>
         {% if messages %}

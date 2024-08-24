@@ -6,25 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    var fireworks = document.createElement("div");
+    fireworks.className = "fireworks";
+    document.body.appendChild(fireworks);
+    console.log("Fireworks animation triggered");  // Debug log
+    setTimeout(function() {
+        fireworks.remove();
+        console.log("Fireworks animation removed");  // Debug log
+    }, 5000);  // Extended duration for visibility
+});
+    </script>
 </head>
 <body>
+    <nav>
+        <p>Welcome, {{ user.profile.first_name }}!</p>
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.profile.email }}</p>
+        <a href="{% url 'log_out' %}">Logout</a>
+    </nav>
+
     <div class="container">
-        <nav>
-            {% if request.path != "/logout/" %}
-                <a href="{% url 'log_out' %}">Logout</a>
-            {% endif %}
-            {% if request.path != "/" %}
-                <a href="{% url 'index' %}">Home</a>
-            {% endif %}
-        </nav>
         {% if messages %}
             {% for message in messages %}
                 <p>{{ message }}</p>
             {% endfor %}
         {% endif %}
-        <h1>Welcome, {{ user.username }}!</h1>
-        <p>Username: {{ user.username }}</p>
-        <!-- <p>Email: {{ user.email }}</p> -->
+
+        <h2>Your Blog Posts</h2>
+        <a href="{% url 'create_blog_post' %}">
+            <button>Create New Post</button>
+        </a>
+        <ul>
+            {% for post in blog_posts %}
+                <li>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="Image for {{ post.title }}">
+                    {% endif %}
+                    <p>Created on: {{ post.created_at }}</p>
+                    <a href="{% url 'edit_blog_post' post.pk %}">Edit</a> |
+                    <a href="{% url 'delete_blog_post' post.pk %}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>

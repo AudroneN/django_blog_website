@@ -7,6 +7,16 @@
     <title>Login</title>
    
     <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var fireworks = document.createElement("div");
+            fireworks.className = "fireworks";
+            document.body.appendChild(fireworks);
+            setTimeout(function() {
+                fireworks.remove();
+            }, 3000);
+        });
+    </script>
 </head>
 <body>
     <div class="container">
