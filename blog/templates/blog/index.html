@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            {% if request.path != "/logout/" %}
+                <a href="{% url 'log_out' %}">Logout</a>
+            {% endif %}
+            {% if request.path != "/" %}
+                <a href="{% url 'index' %}">Home</a>
+            {% endif %}
+        </nav>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p>Username: {{ user.username }}</p>
+        <!-- <p>Email: {{ user.email }}</p> -->
+    </div>
+</body>
+</html>
